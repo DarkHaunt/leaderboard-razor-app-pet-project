@@ -1,0 +1,7 @@
+﻿services:
+  leaderboard-razor-app-pet-project:
+    image: leaderboard-razor-app-pet-project
+    build:
+      context: .
+      dockerfile: Dockerfile
+

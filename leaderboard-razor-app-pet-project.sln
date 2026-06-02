@@ -3,6 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatingApp.Web", "RatingApp.Web\RatingApp.Web.csproj", "{F1F22906-8FE8-4CC4-B01F-A1C10CBCBFDD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F4959439-7DE7-40D5-BD97-6531385F5438}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		compose.yaml = compose.yaml
+		Dockerfile = Dockerfile
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatingApp.Domain", "RatingApp.Domain\RatingApp.Domain.csproj", "{3E1549E8-D498-4B1E-B8D0-000B24B8A7C2}"
 EndProject
