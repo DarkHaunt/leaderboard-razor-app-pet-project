@@ -1,0 +1,22 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  leaderboard-dot-net-app:
+    build:
+      context: "D:\\.NET\\leaderboard-razor-app-pet-project"
+      dockerfile: "Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net10.0/RatingApp.Web.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_STATICWEBASSETS: "/app/bin/Debug/net10.0/RatingApp.Web.staticwebassets.runtime.CT.json"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "leaderboard-dot-net-app:dev"
+    ports: []
+    volumes:
+    - "D:\\.NET\\leaderboard-razor-app-pet-project\\RatingApp.Web:/app:rw"
+    - "D:\\.NET\\leaderboard-razor-app-pet-project:/src:rw"
+    - "C:\\Users\\DarkHaunt\\.nuget\\packages:/home/app/.nuget/packages"
+    working_dir: "/app"

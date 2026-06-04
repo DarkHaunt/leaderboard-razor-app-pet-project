@@ -1,7 +1,25 @@
 ﻿services:
-  leaderboard-razor-app-pet-project:
-    image: leaderboard-razor-app-pet-project
+  leaderboard-dot-net-app:
+    image: leaderboard-dot-net-app
+    pull_policy: build
     build:
       context: .
       dockerfile: Dockerfile
-
+    ports:
+      - "8080:8081"
+    container_name: leaderboard-web-api
+    depends_on:
+      - db
+  db:
+    image: postgres:latest
+    container_name: leaderboard-db-postgresql
+    ports:
+      - "9087:5432"
+    environment:
+      - POSTGRES_USER:lb_user
+      - POSTGRES_PASSWORD:1234
+      - POSTGRES_DB=leaderboard_db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+volumes:
+  db_data:

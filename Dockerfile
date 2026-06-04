@@ -7,17 +7,17 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["leaderboard-razor-app-pet-project.csproj", "./"]
-RUN dotnet restore "leaderboard-razor-app-pet-project.csproj"
+COPY ["RatingApp.Web.csproj", "./"]
+RUN dotnet restore "RatingApp.Web.csproj"
 COPY . .
 WORKDIR "/src/"
-RUN dotnet build "./leaderboard-razor-app-pet-project.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./RatingApp.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./leaderboard-razor-app-pet-project.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./RatingApp.Web.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "leaderboard-razor-app-pet-project.dll"]
+ENTRYPOINT ["dotnet", "RatingApp.Web.dll"]
