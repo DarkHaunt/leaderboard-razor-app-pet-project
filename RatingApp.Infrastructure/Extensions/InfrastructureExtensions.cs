@@ -17,6 +17,7 @@ public static class InfrastructureExtensions
          options.UseNpgsql(configuration.GetConnectionString("Default")));
 
       services.AddScoped<IPlayerRepository, PlayerRepository>();
+      services.AddScoped<ILeagueRepository, LeagueRepository>();
 
       return services;
    }
