@@ -6,4 +6,5 @@ namespace RatingApp.Infrastructure.Persistence;
 public class RatingAppDbContext : DbContext
 {
    public DbSet<PlayerEntity> Players { get; set; }
+   public DbSet<LeagueEntity> Leagues { get; set; }
 }
