@@ -7,11 +7,11 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["RatingApp.Web.csproj", "./"]
-RUN dotnet restore "RatingApp.Web.csproj"
+COPY ["RatingApp.Web/RatingApp.Web.csproj", "RatingApp.Web/"]
+RUN dotnet restore "RatingApp.Web/RatingApp.Web.csproj"
 COPY . .
-WORKDIR "/src/"
-RUN dotnet build "./RatingApp.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/RatingApp.Web"
+RUN dotnet build "RatingApp.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release

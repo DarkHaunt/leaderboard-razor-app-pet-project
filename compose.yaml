@@ -16,8 +16,8 @@
     ports:
       - "9087:5432"
     environment:
-      - POSTGRES_USER:lb_user
-      - POSTGRES_PASSWORD:1234
+      - POSTGRES_USER=lb_user
+      - POSTGRES_PASSWORD=1234
       - POSTGRES_DB=leaderboard_db
     volumes:
       - db_data:/var/lib/postgresql/data
