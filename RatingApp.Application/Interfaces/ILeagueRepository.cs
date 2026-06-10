@@ -4,9 +4,11 @@ namespace RatingApp.Application.Interfaces;
 
 public interface ILeagueRepository
 {
-   Task<LeagueEntity> GetByIdAsync(Guid id);
-   Task<IEnumerable<LeagueEntity>> GetAll(Func<LeagueEntity, bool>? predicate = null);
-   Task AddAsync(LeagueEntity league);
-   Task UpdateAsync(LeagueEntity league);
-   Task DeleteAsync(LeagueEntity league);
+   Task<List<LeagueEntity>> GetAllAsync();
+   Task<LeagueEntity?> GetByIdAsync(Guid id);
+   Task AddAsync(string name, string description, int requiredRating);
+   Task UpdateAsync(Guid id, string name, string description, int requiredRating);
+   Task DeleteAsync(Guid id);
+   Task AddPlayerToLeagueAsync(Guid leagueId, PlayerEntity player);
+   Task RemovePlayerFromLeagueAsync(Guid leagueId, PlayerEntity player);
 }

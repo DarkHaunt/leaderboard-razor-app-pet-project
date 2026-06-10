@@ -4,9 +4,9 @@ namespace RatingApp.Application.Interfaces;
 
 public interface IPlayerRepository
 {
-   Task<PlayerEntity> GetByIdAsync(Guid id);
-   Task<IEnumerable<PlayerEntity>> GetAll(Func<PlayerEntity, bool>? predicate = null);
-   Task AddAsync(PlayerEntity player);
-   Task UpdateAsync(PlayerEntity player);
-   Task DeleteAsync(PlayerEntity player);
+   Task<List<PlayerEntity>> GetAllAsync();
+   Task<PlayerEntity?> GetByIdAsync(Guid id);
+   Task AddAsync(string nickname, int? rating = null);
+   Task UpdateAsync(Guid id, string nickname, int rating);
+   Task DeleteAsync(Guid id);
 }
