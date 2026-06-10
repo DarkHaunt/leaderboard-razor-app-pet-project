@@ -5,36 +5,39 @@ using RatingApp.Infrastructure.Persistence;
 
 namespace RatingApp.Infrastructure.Repositories;
 
-public sealed class PlayerRepository(RatingAppDbContext context, IGuidProvider guidProvider) : IPlayerRepository
+public sealed class PlayerRepository(RatingAppDbContext context) : IPlayerRepository
 {
-   public async Task<List<PlayerEntity>> GetAllAsync()
+   public async Task<List<PlayerEntity>> GetAllPlayersAsync()
    {
       return await context.Players
          .AsNoTracking()
          .ToListAsync();
    }
 
-   public async Task<PlayerEntity?> GetByIdAsync(Guid id)
+   public async Task<PlayerEntity?> GetPlayerByIdAsync(Guid id)
    {
       return await context.Players
          .AsNoTracking()
          .FirstOrDefaultAsync(p => p.Id == id);
    }
 
-   public async Task AddAsync(string nickname, int? rating = null)
+   public async Task<PlayerEntity?> GetPlayerTrackedByIdAsync(Guid id) =>
+      await context.Players.FirstOrDefaultAsync(p => p.Id == id);
+
+   public async Task AddPlayerAsync(Guid id, string nickname, int rating)
    {
       var player = new PlayerEntity
       {
-         Id = guidProvider.CreateNew(),
+         Id = id,
          Nickname = nickname,
-         Rating = rating ?? 0
+         Rating = rating
       };
       
       await context.Players.AddAsync(player);
       await context.SaveChangesAsync();
    }
 
-   public async Task UpdateAsync(Guid id, string nickname, int rating)
+   public async Task UpdatePlayerAsync(Guid id, string nickname, int rating)
    {
       await context.Players.Where(p => p.Id == id)
          .ExecuteUpdateAsync
@@ -44,10 +47,26 @@ public sealed class PlayerRepository(RatingAppDbContext context, IGuidProvider g
          );
    }
 
-   public async Task DeleteAsync(Guid id)
+   public async Task DeletePlayerAsync(Guid id)
    {
       await context.Players
          .Where(p => p.Id == id)
          .ExecuteDeleteAsync();
+   }
+
+   public async Task UpdateLeagueForPlayer(Guid playerId, LeagueEntity? league)
+   {
+      PlayerEntity player = await GetPlayerByIdTrackedAsync(playerId);
+      
+      player.LeagueId = league?.Id ?? Guid.Empty;
+      player.League = league;
+      
+      await context.SaveChangesAsync();
+   }
+
+   private async Task<PlayerEntity> GetPlayerByIdTrackedAsync(Guid id)
+   {
+      PlayerEntity? player = await GetPlayerTrackedByIdAsync(id);
+      return player ?? throw new ArgumentNullException($"Player of id {id} not found");
    }
 }

@@ -1,0 +1,17 @@
+﻿@page
+@using RatingApp.Domain.Entities
+@model LeagueModel
+
+@{
+    ViewData["Title"] = "League " + @Model.League.Name;
+}
+
+<div class="text-center">
+    <h1 class="display-4">There are all players of league @Model.League.Name:</h1>
+    @foreach (PlayerEntity player in Model.League.Players)
+    {
+        <tr>
+            <td><a href="/Players/@player.Id">@player.Nickname</a> r: @player.Rating</td>
+        </tr>
+    }
+</div>

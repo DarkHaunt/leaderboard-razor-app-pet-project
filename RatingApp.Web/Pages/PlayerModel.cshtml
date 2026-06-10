@@ -1,0 +1,28 @@
+﻿@page
+@using RatingApp.Domain.Entities
+@model leaderboard_razor_app_pet_project.Pages.PlayerModel
+
+@{
+    ViewData["Title"] = "Player Info";
+}
+
+@{ PlayerEntity player = Model.Player; }
+<div class="text-center">
+    <h1 class="display-4">@player.Nickname</h1>
+    <tr>
+        <td>@player.Rating</td>
+    </tr>
+
+    @if (player.League != null)
+    {
+        <tr>
+            <td><a href="/Leagues/@player.League.Id">@player.League.Name</a></td>
+        </tr>
+    }
+    else
+    {
+        <tr>
+            <td>---</td>
+        </tr>
+    }
+</div>

@@ -1,8 +1,10 @@
+using RatingApp.Application.Extensions;
 using RatingApp.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
+builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
@@ -25,5 +27,6 @@ app.UseAuthentication();
 app.MapStaticAssets();
 app.MapRazorPages()
    .WithStaticAssets();
+app.UseStatusCodePages();
 
 app.Run();
