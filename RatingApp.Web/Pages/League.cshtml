@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{leagueId}"
 @using RatingApp.Domain.Entities
 @model LeagueModel
 
@@ -10,8 +10,6 @@
     <h1 class="display-4">There are all players of league @Model.League.Name:</h1>
     @foreach (PlayerEntity player in Model.League.Players)
     {
-        <tr>
-            <td><a href="/Players/@player.Id">@player.Nickname</a> r: @player.Rating</td>
-        </tr>
+        <h3><a href="/Player/@player.Id">@player.Nickname</a> R: @player.Rating</h3>
     }
 </div>

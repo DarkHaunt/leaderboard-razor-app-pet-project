@@ -11,6 +11,8 @@ public class LeagueRepository(RatingAppDbContext context) : ILeagueRepository
    {
       return await context.Leagues
          .AsNoTracking()
+         .Include(l => l.Players)
+         .OrderBy(l => l.RequiredRating)
          .ToListAsync();
    }
 
@@ -18,6 +20,7 @@ public class LeagueRepository(RatingAppDbContext context) : ILeagueRepository
    {
       return await context.Leagues
          .AsNoTracking()
+         .Include(l => l.Players)
          .FirstOrDefaultAsync(l => l.Id == id);
    }
 

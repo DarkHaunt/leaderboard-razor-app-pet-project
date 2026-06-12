@@ -1,0 +1,19 @@
+﻿@page
+@model leaderboard_razor_app_pet_project.Pages.AdminPage
+
+@{
+    ViewData["Title"] = "Admin Page";
+}
+
+<h1 class="display-4">Add New Player</h1><br/>
+<form method="post">
+    <p>
+        <label>Name</label><br/>
+        <input name="nickname" type="text"/>
+    </p>
+    <p>
+        <label>Rating</label><br/>
+        <input name="rating" type="number"/>
+    </p>
+    <input type="submit" value="Create"/>
+</form>

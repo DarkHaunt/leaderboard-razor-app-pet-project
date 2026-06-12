@@ -6,9 +6,12 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">There you can explore all leagues</h1>
+    <h1 class="display-4">There you can explore all leagues</h1><br/>
+</div>
+
+<div class="text-left">
     @foreach (LeagueEntity league in Model.Leagues)
     {
-        <h2><a href="/Leagues/@league.Id" >@league.Name</a></h2>
+        <h2><a href="/League/@league.Id">@league.Name</a></h2>
     }
 </div>

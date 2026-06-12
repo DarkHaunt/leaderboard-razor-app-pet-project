@@ -11,6 +11,7 @@ public sealed class PlayerRepository(RatingAppDbContext context) : IPlayerReposi
    {
       return await context.Players
          .AsNoTracking()
+         .Include(p => p.League)
          .ToListAsync();
    }
 
@@ -18,6 +19,7 @@ public sealed class PlayerRepository(RatingAppDbContext context) : IPlayerReposi
    {
       return await context.Players
          .AsNoTracking()
+         .Include(p => p.League)
          .FirstOrDefaultAsync(p => p.Id == id);
    }
 
