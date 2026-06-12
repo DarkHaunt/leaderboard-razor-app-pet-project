@@ -4,11 +4,11 @@ using RatingApp.Domain.Entities;
 
 namespace leaderboard_razor_app_pet_project.Pages;
 
-public class HomeModel(ILeagueRepository leagueRepository) : PageModel
+public class IndexModel(ILeagueRepository leagueRepository) : PageModel
 {
    public List<LeagueEntity> Leagues { get; set; } = new();
    
-   public async void OnGet()
+   public async Task OnGetAsync()
    {
       Leagues = await leagueRepository.GetAllLLeaguesAsync();
    }

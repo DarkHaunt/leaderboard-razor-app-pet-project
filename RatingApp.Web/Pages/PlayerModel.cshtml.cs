@@ -8,13 +8,9 @@ public class PlayerModel(IPlayerRepository playerRepository) : PageModel
 {
    public PlayerEntity Player { get; private set; }
    
-   public async void OnGet(Guid playerId)
+   public async Task OnGetAsync(Guid playerId)
    {
       PlayerEntity? player = await playerRepository.GetPlayerByIdAsync(playerId);
-      
-      if (player == null)
-         throw new Exception("Player of id " + playerId + " not found");
-      
-      Player = player;
+      Player = player ?? throw new Exception("Player of id " + playerId + " not found");
    }
 }

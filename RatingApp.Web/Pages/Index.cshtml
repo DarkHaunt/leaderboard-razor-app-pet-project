@@ -1,6 +1,6 @@
 ﻿@page
 @using RatingApp.Domain.Entities
-@model HomeModel
+@model IndexModel
 @{
     ViewData["Title"] = "Leagues";
 }
@@ -9,6 +9,6 @@
     <h1 class="display-4">There you can explore all leagues</h1>
     @foreach (LeagueEntity league in Model.Leagues)
     {
-        <tr><td><a href="/Leagues/@league.Id" >@league.Name</a></td></tr>
+        <h2><a href="/Leagues/@league.Id" >@league.Name</a></h2>
     }
 </div>

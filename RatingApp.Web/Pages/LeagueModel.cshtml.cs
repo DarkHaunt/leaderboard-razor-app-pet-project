@@ -8,13 +8,9 @@ public class LeagueModel(ILeagueRepository leagueRepository) : PageModel
 {
    public LeagueEntity League { get; private set; }
    
-   public async void OnGet(Guid leagueId)
+   public async Task OnGetAsync(Guid leagueId)
    {
       LeagueEntity? league = await leagueRepository.GetLeagueByIdAsync(leagueId);
-
-      if (league == null)
-         throw new Exception("League of id " + leagueId + " not found");
-         
-      League = league;
+      League = league ?? throw new Exception("League of id " + leagueId + " not found");
    }
 }
