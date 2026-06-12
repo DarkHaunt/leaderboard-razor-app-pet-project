@@ -66,7 +66,9 @@ public class LeagueRepository(RatingAppDbContext context) : ILeagueRepository
 
    public async Task RemovePlayerFromHisLeague(PlayerEntity player)
    {
-      LeagueEntity league = await GetLeagueTrackedAsync(player.LeagueId);
+      if(player.LeagueId == null) return;
+      
+      LeagueEntity league = await GetLeagueTrackedAsync(player.LeagueId.Value);
       league.Players.Remove(player);
       
       await context.SaveChangesAsync();
