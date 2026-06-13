@@ -1,11 +1,9 @@
 using RatingApp.Application.Extensions;
-using RatingApp.Domain.Extensions;
 using RatingApp.Infrastructure.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
-builder.Services.AddDomainServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructure(builder.Configuration);
 

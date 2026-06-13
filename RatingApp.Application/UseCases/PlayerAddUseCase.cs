@@ -1,6 +1,5 @@
 ﻿using RatingApp.Application.Interfaces;
 using RatingApp.Domain.Entities;
-using RatingApp.Domain.Services;
 using RatingApp.Domain.Specifications.Leagues;
 
 namespace RatingApp.Application.UseCases;
@@ -8,7 +7,6 @@ namespace RatingApp.Application.UseCases;
 public class PlayerCreateUseCase(
    IPlayerRepository playerRepository,
    ILeagueRepository leagueRepository,
-   LeagueDeterminer leagueDeterminer,
    IGuidProvider guidProvider)
 {
    public async Task CreatePlayerAsync(string nickname, int? rating = null, CancellationToken ct = default)
@@ -17,9 +15,9 @@ public class PlayerCreateUseCase(
       Guid playerId = guidProvider.CreateNew();
 
       await playerRepository.AddPlayerAsync(playerId, nickname, playerRating, ct);
-      var leaguesBelowRating = new LeaguesRequiredRating((uint)playerRating);
+      var leaguesBelowRating = new LeaguesBelowRating((uint)playerRating);
       var leaguesPassedByPlayer = await leagueRepository.GetAllLeaguesAsync(leaguesBelowRating, orderBy: l => l.RequiredRating, ct: ct);
-      LeagueEntity? league = leagueDeterminer.DetermineLeagueForRating(playerRating, leaguesPassedByPlayer);
+      LeagueEntity? league = leaguesPassedByPlayer.LastOrDefault();
 
       if (league != null)
          await AddPlayerToLeagueAsync(playerId, league.Id, ct);

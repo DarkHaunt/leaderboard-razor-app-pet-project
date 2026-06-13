@@ -21,23 +21,23 @@ public sealed class PlayerRepository(RatingAppDbContext context) : IPlayerReposi
          q = q.OrderBy(orderBy);
 
       return await q
-         .Include(l => l.League)
+         .Include(p => p.League)
          .ToListAsync(ct);
    }
 
    public async Task<PlayerEntity?> GetPlayerByIdAsync(Guid id, bool tracked = false, CancellationToken ct = default)
    {
-      var q = context.Players.Include(l => l.League);
+      var q = context.Players.Include(p => p.League);
 
       if (tracked)
       {
          return await q
-            .FirstOrDefaultAsync(l => l.Id == id, ct);
+            .FirstOrDefaultAsync(p => p.Id == id, ct);
       }
 
       return await q
          .AsNoTracking()
-         .FirstOrDefaultAsync(l => l.Id == id, ct);
+         .FirstOrDefaultAsync(p => p.Id == id, ct);
 
    }
 
