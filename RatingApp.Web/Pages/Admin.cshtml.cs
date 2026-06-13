@@ -5,11 +5,17 @@ using RatingApp.Application.UseCases;
 namespace leaderboard_razor_app_pet_project.Pages;
 
 [IgnoreAntiforgeryToken]
-public class AdminPage(PlayerAddUseCase playerAddUseCase) : PageModel
+public class AdminPage(PlayerCreateUseCase playerCreateUseCase, PlayerDeleteUseCase playerDeleteUseCase) : PageModel
 {
-   public async Task<IActionResult> OnPostAsync(string nickname, int? rating)
+   public async Task<IActionResult> OnPostCreateAsync(string nickname, int? rating)
    {
-      await playerAddUseCase.CreatePlayerAsync(nickname, rating);
-      return RedirectToPage("Index");
+      await playerCreateUseCase.CreatePlayerAsync(nickname, rating, HttpContext.RequestAborted);
+      return Page();
    }
+   
+   public async Task<IActionResult> OnPostDeleteAsync(string nickname)
+   {
+      await playerDeleteUseCase.DeleteAllPlayersWithNicknameAsync(nickname, HttpContext.RequestAborted);
+      return Page();
+    }
 }

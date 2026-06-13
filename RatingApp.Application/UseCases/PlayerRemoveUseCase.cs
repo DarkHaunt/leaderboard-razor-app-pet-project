@@ -1,21 +1,23 @@
 ﻿using RatingApp.Application.Interfaces;
-using RatingApp.Domain.Entities;
+using RatingApp.Domain.Specifications.Players;
 
 namespace RatingApp.Application.UseCases;
 
-public class PlayerRemoveUseCase(
+public class PlayerDeleteUseCase(
    IPlayerRepository playerRepository,
    ILeagueRepository leagueRepository)
 {
-   public async Task DeletePlayerAsync(Guid playerId)
+   public async Task DeleteAllPlayersWithNicknameAsync(string nickname, CancellationToken ct = default)
    {
-      PlayerEntity? player = await playerRepository.GetPlayerTrackedByIdAsync(playerId);
-      
-      if(player == null) return;
+      var nicknameSpecification = new PlayersWithNameRequired(nickname);
+      var players = await playerRepository.GetAllPlayersAsync(nicknameSpecification, ct: ct);
 
-      if (player.League != null)
-         await leagueRepository.RemovePlayerFromHisLeague(player);
-      
-      await playerRepository.DeletePlayerAsync(playerId);
+      await Parallel.ForEachAsync(players, ct, async (player, token) =>
+      {
+         if (player.League != null)
+            await leagueRepository.RemovePlayerFromHisLeague(player, token);
+
+         await playerRepository.DeletePlayerAsync(player.Id, token);
+      });
    }
 }

@@ -7,7 +7,7 @@ public static class ApplicationExtensions
 {
    public static void AddApplicationServices(this IServiceCollection services)
    {
-      services.AddScoped<PlayerAddUseCase>();
-      services.AddScoped<PlayerRemoveUseCase>();
+      services.AddScoped<PlayerCreateUseCase>();
+      services.AddScoped<PlayerDeleteUseCase>();
    }
 }

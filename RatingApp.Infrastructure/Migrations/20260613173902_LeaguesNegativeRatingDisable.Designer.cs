@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RatingApp.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using RatingApp.Infrastructure.Persistence;
 namespace RatingApp.Infrastructure.Migrations
 {
     [DbContext(typeof(RatingAppDbContext))]
-    partial class RatingAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260613173902_LeaguesNegativeRatingDisable")]
+    partial class LeaguesNegativeRatingDisable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

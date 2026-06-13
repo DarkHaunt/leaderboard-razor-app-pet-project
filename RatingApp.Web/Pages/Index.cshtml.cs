@@ -10,6 +10,6 @@ public class IndexModel(ILeagueRepository leagueRepository) : PageModel
    
    public async Task OnGetAsync()
    {
-      Leagues = await leagueRepository.GetAllLLeaguesAsync();
+      Leagues = await leagueRepository.GetAllLeaguesAsync(orderBy: l => l.RequiredRating, ct: HttpContext.RequestAborted);
    }
 }

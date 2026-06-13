@@ -5,15 +5,31 @@
     ViewData["Title"] = "Admin Page";
 }
 
-<h1 class="display-4">Add New Player</h1><br/>
-<form method="post">
-    <p>
-        <label>Name</label><br/>
-        <input name="nickname" type="text"/>
-    </p>
-    <p>
-        <label>Rating</label><br/>
-        <input name="rating" type="number"/>
-    </p>
-    <input type="submit" value="Create"/>
-</form>
+<tr>
+    <td>
+        <h3 class="display-4">Create Player</h3><br/>
+        <form method="post" asp-page-handler="Create">
+            <p>
+                <label>Name</label><br/>
+                <input name="nickname" type="text"/>
+            </p>
+            <p>
+                <label>Rating</label><br/>
+                <input name="rating" type="number"/>
+            </p>
+            <input type="submit" value="Create"/>
+        </form>
+    </td>
+    <td>
+        <h3 class="display-4">Delete Player</h3><br/>
+        <h2>Removes all player with nickname below:</h2>
+        <form method="post" asp-page-handler="Delete">
+            <p>
+                <label>Name</label><br/>
+                <input name="nickname" type="text"/>
+            </p>
+            <input type="submit" value="Delete"/>
+        </form>
+    </td>
+</tr>
+
