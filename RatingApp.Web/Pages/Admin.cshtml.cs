@@ -9,13 +9,21 @@ public class AdminPage(PlayerCreateUseCase playerCreateUseCase, PlayerDeleteUseC
 {
    public async Task<IActionResult> OnPostCreateAsync(string nickname, int? rating)
    {
-      await playerCreateUseCase.CreatePlayerAsync(nickname, rating, HttpContext.RequestAborted);
+      var result = await playerCreateUseCase.CreatePlayerAsync(nickname, rating, HttpContext.RequestAborted);
+
+      if (result.IsFailure)
+         ModelState.AddModelError("", $"Failed to create player {nickname}, try again");
+      
       return Page();
    }
    
    public async Task<IActionResult> OnPostDeleteAsync(string nickname)
    {
-      await playerDeleteUseCase.DeleteAllPlayersWithNicknameAsync(nickname, HttpContext.RequestAborted);
+      var result = await playerDeleteUseCase.DeleteAllPlayersWithNicknameAsync(nickname, HttpContext.RequestAborted);
+      
+      if (result.IsFailure)
+         ModelState.AddModelError("", $"Failed to delete players with nickname {nickname}, try again");
+      
       return Page();
     }
 }

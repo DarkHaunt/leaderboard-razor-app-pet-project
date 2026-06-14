@@ -25,20 +25,11 @@ public sealed class PlayerRepository(RatingAppDbContext context) : IPlayerReposi
          .ToListAsync(ct);
    }
 
-   public async Task<PlayerEntity?> GetPlayerByIdAsync(Guid id, bool tracked = false, CancellationToken ct = default)
+   public async Task<PlayerEntity?> GetPlayerByIdAsync(Guid id, CancellationToken ct = default)
    {
-      var q = context.Players.Include(p => p.League);
-
-      if (tracked)
-      {
-         return await q
-            .FirstOrDefaultAsync(p => p.Id == id, ct);
-      }
-
-      return await q
-         .AsNoTracking()
-         .FirstOrDefaultAsync(p => p.Id == id, ct);
-
+      return await context.Players.AsNoTracking()
+         .Include(p => p.League)
+         .FirstOrDefaultAsync(l => l.Id == id, ct);
    }
 
    public async Task AddPlayerAsync(Guid id, string nickname, int rating, CancellationToken ct = default)
@@ -51,7 +42,6 @@ public sealed class PlayerRepository(RatingAppDbContext context) : IPlayerReposi
       };
       
       await context.Players.AddAsync(player, ct);
-      await context.SaveChangesAsync(ct);
    }
 
    public async Task UpdatePlayerAsync(Guid id, string nickname, int rating, CancellationToken ct = default)
@@ -73,19 +63,13 @@ public sealed class PlayerRepository(RatingAppDbContext context) : IPlayerReposi
          .ExecuteDeleteAsync(ct);
    }
 
-   public async Task UpdateLeagueForPlayer(Guid playerId, LeagueEntity? league, CancellationToken ct = default)
+   public async Task AddPlayerToLeagueAsync(Guid playerId, Guid leagueId, CancellationToken ct = default)
    {
-      PlayerEntity player = await GetPlayerGuaranteedTrackedAsync(playerId, ct);
+      PlayerEntity? player = await context.Players.FirstOrDefaultAsync(p => p.Id == playerId, ct);
       
-      player.LeagueId = league?.Id ?? Guid.Empty;
-      player.League = league;
-      
-      await context.SaveChangesAsync(ct);
-   }
+      if (player is null)
+         throw new ArgumentNullException($"Player of id {playerId} not found");
 
-   private async Task<PlayerEntity> GetPlayerGuaranteedTrackedAsync(Guid id, CancellationToken ct = default)
-   {
-      PlayerEntity? player = await GetPlayerByIdAsync(id, tracked: true, ct);
-      return player ?? throw new ArgumentNullException($"Player of id {id} not found");
+      player.LeagueId = leagueId;
    }
 }

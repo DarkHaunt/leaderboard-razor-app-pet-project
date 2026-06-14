@@ -5,6 +5,7 @@ using RatingApp.Application.Interfaces;
 using RatingApp.Infrastructure.Persistence;
 using RatingApp.Infrastructure.Providers;
 using RatingApp.Infrastructure.Repositories;
+using RatingApp.Infrastructure.Services;
 
 namespace RatingApp.Infrastructure.Extensions;
 
@@ -19,6 +20,7 @@ public static class InfrastructureExtensions
 
       services.AddSingleton<IGuidProvider, SequentialGuidProvider>();
       
+      services.AddScoped<ITransactionManager, TransactionManager>();
       services.AddScoped<IPlayerRepository, PlayerRepository>();
       services.AddScoped<ILeagueRepository, LeagueRepository>();
 
