@@ -5,9 +5,9 @@
     ViewData["Title"] = "Admin Page";
 }
 
-<tr>
-    <td>
-        <h3 class="display-4">Create Player</h3><br/>
+<h3 class="display-4">Create & Delete Players</h3><br/>
+<div class="row">
+    <div class="col-auto" style="margin-right: 150px">
         <form method="post" asp-page-handler="Create">
             <p>
                 <label>Name</label><br/>
@@ -19,10 +19,9 @@
             </p>
             <input type="submit" value="Create"/>
         </form>
-    </td>
-    <td>
-        <h3 class="display-4">Delete Player</h3><br/>
-        <h2>Removes all player with nickname below:</h2>
+    </div>
+    <div class="col-auto">
+        <h5>Removes all player with nickname below:</h5>
         <form method="post" asp-page-handler="Delete">
             <p>
                 <label>Name</label><br/>
@@ -30,6 +29,6 @@
             </p>
             <input type="submit" value="Delete"/>
         </form>
-    </td>
-</tr>
+    </div>
+</div>
 

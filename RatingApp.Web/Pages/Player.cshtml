@@ -10,19 +10,19 @@
 <div class="text-center">
     <h1 class="display-4">@player.Nickname</h1>
     <tr>
-        <td>R: @player.Rating</td>
+        <h3>R: @player.Rating</h3>
     </tr>
 
     @if (player.League != null)
     {
         <tr>
-            <td>League: <a href="/League/@player.League.Id">@player.League.Name</a></td>
+            <h3>League: <a href="/League/@player.League.Id">@player.League.Name</a></h3>
         </tr>
     }
     else
     {
         <tr>
-            <td>---</td>
+            <h3>---</h3>
         </tr>
     }
 </div>

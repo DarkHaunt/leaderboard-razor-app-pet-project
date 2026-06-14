@@ -7,8 +7,20 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">There are all players in the game:</h1>
-    @foreach (PlayerEntity player in Model.Players)
+    <h1 class="display-4">Find Players:</h1><br/>
+    <form method="post">
+        <p>
+            <label>Filter</label><br/>
+            <input name="nickname" type="text"/>
+        </p>
+        <button type="submit" asp-page-handler="Find">Find</button>
+        <button type="submit" asp-page-handler="Reset">Reset</button>
+    </form>
+</div>
+
+<br/><br/>
+<div class="text-center">
+    @foreach (PlayerEntity player in Model.FilteredPlayers)
     {
         @if (player.League == null)
         {
@@ -16,7 +28,8 @@
         }
         else
         {
-            <h3><a href="/Player/@player.Id">@player.Nickname</a> R: @player.Rating | L: <a href="/League/@player.LeagueId">@player.League.Name</a></h3>
+            <h3><a href="/Player/@player.Id">@player.Nickname</a> R: @player.Rating | L: <a href="/League/@player.LeagueId">@player.League.Name</a>
+            </h3>
         }
     }
 </div>

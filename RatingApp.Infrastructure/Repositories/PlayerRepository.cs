@@ -32,13 +32,14 @@ public sealed class PlayerRepository(RatingAppDbContext context) : IPlayerReposi
          .FirstOrDefaultAsync(l => l.Id == id, ct);
    }
 
-   public async Task AddPlayerAsync(Guid id, string nickname, int rating, CancellationToken ct = default)
+   public async Task AddPlayerAsync(Guid id, string nickname, int rating, Guid? leagueId, CancellationToken ct = default)
    {
       var player = new PlayerEntity
       {
          Id = id,
          Nickname = nickname,
-         Rating = rating
+         Rating = rating,
+         LeagueId = leagueId
       };
       
       await context.Players.AddAsync(player, ct);
@@ -61,15 +62,5 @@ public sealed class PlayerRepository(RatingAppDbContext context) : IPlayerReposi
       await context.Players
          .Where(p => p.Id == id)
          .ExecuteDeleteAsync(ct);
-   }
-
-   public async Task AddPlayerToLeagueAsync(Guid playerId, Guid leagueId, CancellationToken ct = default)
-   {
-      PlayerEntity? player = await context.Players.FirstOrDefaultAsync(p => p.Id == playerId, ct);
-      
-      if (player is null)
-         throw new ArgumentNullException($"Player of id {playerId} not found");
-
-      player.LeagueId = leagueId;
    }
 }

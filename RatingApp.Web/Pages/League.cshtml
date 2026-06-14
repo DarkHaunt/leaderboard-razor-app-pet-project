@@ -7,7 +7,7 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">There are all players of league @Model.League.Name:</h1>
+    <h1 class="display-4">There are all players of league @Model.League.Name:</h1><br/>
     @foreach (PlayerEntity player in Model.League.Players)
     {
         <h3><a href="/Player/@player.Id">@player.Nickname</a> R: @player.Rating</h3>
